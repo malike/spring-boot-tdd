@@ -2,6 +2,10 @@
 
 
 Using TDD to build a sample spring boot app. 
+
+Read all about this project on my [blog](http://malike.github.io/Why-TDD-and-How-To/).
+
+It uses :
  
  1.[Fluentlenium](http://fluentlenium.org/docs/). 
 _"FluentLenium helps you writing readable, reusable, reliable and resilient UI functional tests for the browser."_

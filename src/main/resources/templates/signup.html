@@ -24,7 +24,7 @@
         </tr>
     </table>
 </form>
-<button type="submit" id="signup" onclick="fire_ajax_submit()" href="#" >Submit post</button>
+<button type="submit" id="signup" onclick="submit()" href="#" >Submit post</button>
 
 <script type="text/javascript"
 src="webjars/jquery/2.2.4/jquery.min.js"></script>
@@ -32,34 +32,26 @@ src="webjars/jquery/2.2.4/jquery.min.js"></script>
 <script>
 
 
-    function fire_ajax_submit() {
+    function submit() {
         $("#signup").prop("disabled", true);
         $.ajax({
             type: "POST",
             contentType: "application/json",
             url: "/user/signup",
-            data: function(){
-                var formData = {};
-                var formArray = $("#signupForm").serializeArray();
-                $.each(formArray, function() {
-                    if (formData[this.name]) {
-                        if (!formData[this.name].push) {
-                            formData[this.name] = [formData[this.name]];
-                        }
-                        formData[this.name].push(this.value || '');
-                    } else {
-                        formData[this.name] = this.value || '';
-                    }
-                });
-                return JSON.stringify(formData);
-            },
+            data: getData(),
             dataType: 'json',
             cache: false,
             timeout: 60000,
             success: function (data) {
-                alert("SUCCESS");
-                console.log("SUCCESS : ", data);
+                if(data.status){
+                    alert("SUCCESS: "+data.result.username+" saved.");
+                    console.log("SUCCESS : ", data);
+                }else{
+                    alert("ERROR: "+data.message);
+                    console.log("ERROR : ", data.message);
+                }
                 $("#signup").prop("disabled", false);
+
             },
             error: function (e) {
                 alert("ERROR:"+e.status);
@@ -69,6 +61,22 @@ src="webjars/jquery/2.2.4/jquery.min.js"></script>
             }
         });
 
+    }
+
+    function getData(){
+            var formData = {};
+            var formArray = $("#signupForm").serializeArray();
+            $.each(formArray, function() {
+                if (formData[this.name]) {
+                    if (!formData[this.name].push) {
+                        formData[this.name] = [formData[this.name]];
+                    }
+                    formData[this.name].push(this.value || '');
+                } else {
+                    formData[this.name] = this.value || '';
+                }
+            });
+            return JSON.stringify(formData);
     }
 
 </script>

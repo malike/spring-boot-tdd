@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Hello TDD!</title>
+</head>
+<body>
+<span class="header">Signup</span>
+
+<form id="signupForm" action="#" th:action="@{/}" method="post">
+    <table>
+        <tr>
+            <td>Username:</td>
+            <td><input class="username" name="username" type="text"  /></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input class="email" name="email" type="text"  /></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input class="password" name="password" type="text"  /></td>
+
+        </tr>
+    </table>
+</form>
+<button type="submit" id="signup" onclick="fire_ajax_submit()" href="#" >Submit post</button>
+
+<script type="text/javascript"
+src="webjars/jquery/2.2.4/jquery.min.js"></script>
+
+<script>
+
+
+    function fire_ajax_submit() {
+        $("#signup").prop("disabled", true);
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/user/signup",
+            data: function(){
+                var formData = {};
+                var formArray = $("#signupForm").serializeArray();
+                $.each(formArray, function() {
+                    if (formData[this.name]) {
+                        if (!formData[this.name].push) {
+                            formData[this.name] = [formData[this.name]];
+                        }
+                        formData[this.name].push(this.value || '');
+                    } else {
+                        formData[this.name] = this.value || '';
+                    }
+                });
+                return JSON.stringify(formData);
+            },
+            dataType: 'json',
+            cache: false,
+            timeout: 60000,
+            success: function (data) {
+                alert("SUCCESS");
+                console.log("SUCCESS : ", data);
+                $("#signup").prop("disabled", false);
+            },
+            error: function (e) {
+                alert("ERROR:"+e.status);
+                console.log("ERROR : ", e);
+                $("#signup").prop("disabled", false);
+
+            }
+        });
+
+    }
+
+</script>
+
+</body>
+</html>

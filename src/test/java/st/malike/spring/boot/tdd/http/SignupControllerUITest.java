@@ -17,6 +17,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import st.malike.spring.boot.tdd.AppMain;
+import st.malike.spring.boot.tdd.util.Enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,10 @@ public class SignupControllerUITest extends FluentTest {
     public WebDriver webDriver = new FirefoxDriver();
     @Autowired
     private SignupController signupController;
+    private final String USERNAME ="malike";
+    private final String EMAIL ="st.malike@gmail.com";
+    private final String PASSWORD ="password";
+
 
 
 
@@ -85,13 +90,36 @@ public class SignupControllerUITest extends FluentTest {
         FluentList<FluentWebElement> passwordInput =find(".password");
         FluentList<FluentWebElement> signup =find("#signup");
 
-        usernameInput.first().fill().with("malike");
-        emaillInput.first().fill().with("st.malike@gmail.com");
-        passwordInput.first().fill().with("password");
+        usernameInput.first().fill().with(USERNAME);
+        emaillInput.first().fill().with(EMAIL);
+        passwordInput.first().fill().with(PASSWORD);
 
-        signup.first().doubleClick();
+        signup.first().click();
 
-        Assert.assertEquals("SUCCESS",webDriver.switchTo().alert().getText());
+        Assert.assertEquals("SUCCESS: "+USERNAME+" saved.",webDriver.switchTo().alert().getText());
+    }
+
+ @Test
+    public void testFillSignupFormOnMultipleAccountExceptionPage() throws Exception {
+        goTo("http://localhost:9000/signup");
+
+        //asserts inputs
+        FluentList<FluentWebElement> usernameInput = find(".username");
+        FluentList<FluentWebElement> emaillInput = find(".email");
+        FluentList<FluentWebElement> passwordInput =find(".password");
+        FluentList<FluentWebElement> signup =find("#signup");
+
+        usernameInput.first().fill().with(USERNAME);
+        emaillInput.first().fill().with(EMAIL);
+        passwordInput.first().fill().with(PASSWORD);
+
+        signup.first().click();
+
+        //double click to create account twice
+        webDriver.switchTo().alert().dismiss();
+        signup.first().click();
+
+        Assert.assertEquals("ERROR: "+ Enums.JSONResponseMessage.TWO_OF_THAT_CANT_EXIST.toString(),webDriver.switchTo().alert().getText());
     }
 
 

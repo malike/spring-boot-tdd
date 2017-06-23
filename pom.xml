@@ -26,10 +26,11 @@
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
             <url>http://repo.spring.io/libs-release-local</url>
-        </repository> <repository>
+        </repository> 
+        <repository>
             <id>maven</id>
             <name>mvn</name>
-        <url>http://mvn.maven.org/maven2/</url>
+            <url>http://central.maven.org/maven2/</url>
         </repository>
     </repositories>
 
@@ -50,6 +51,22 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
+        <pluginRepository>
+            <id>google-releasess</id>
+            <url>https://oss.sonatype.org/content/repositories/releases</url>                  
+        </pluginRepository>       
+        <pluginRepository>
+            <id>findbugs</id>
+            <url>https://mvnrepository.com/artifact/org.codehaus.mojo/findbugs-maven-plugin</url>
+        </pluginRepository>       
+        <pluginRepository>
+            <id>son</id>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </pluginRepository>       
+        <pluginRepository>
+            <id>maven</id>
+            <url>http://central.maven.org/maven2/</url>
+        </pluginRepository> 
     </pluginRepositories>
 
 
@@ -61,7 +78,7 @@
 
     <dependencies>
 
-       <!--for test-->
+        <!--for test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -81,10 +98,10 @@
         </dependency>
 
         <dependency>
-        <groupId>com.jayway.restassured</groupId>
-        <artifactId>spring-mock-mvc</artifactId>
-        <version>2.4.1</version>
-        <scope>test</scope>
+            <groupId>com.jayway.restassured</groupId>
+            <artifactId>spring-mock-mvc</artifactId>
+            <version>2.4.1</version>
+            <scope>test</scope>
         </dependency>
 
 
@@ -108,7 +125,7 @@
 
 
 
-    <!--End for Test-->
+        <!--End for Test-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
